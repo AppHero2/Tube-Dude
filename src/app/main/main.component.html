@@ -1,0 +1,47 @@
+<mat-sidenav-container>
+
+    <div id="fuse-main-content">
+
+        <ng-container *ngIf="fuseSettings.layout.toolbar === 'above'">
+            <fuse-toolbar class="above" [ngClass]="fuseSettings.colorClasses.toolbar"></fuse-toolbar>
+        </ng-container>
+
+        <fuse-navbar layout="horizontal"
+                     class="top-navbar" fxHide fxShow.gt-md
+                     [ngClass]="fuseSettings.colorClasses.navbar"
+                     *ngIf="fuseSettings.layout.navigation === 'top'">
+        </fuse-navbar>
+
+        <div id="wrapper">
+
+            <fuse-sidebar [name]="'navbar'"
+                          [folded]="fuseSettings.layout.navigationFolded"
+                          [lockedOpen]="'gt-md'"
+                          class="left-navbar" [ngClass]="fuseSettings.colorClasses.navbar"
+                          *ngIf="fuseSettings.layout.navigation === 'left' || fuseSettings.layout.navigation === 'top'">
+                <fuse-navbar layout="vertical"></fuse-navbar>
+            </fuse-sidebar>
+
+            <div class="content-wrapper">
+
+                <ng-container *ngIf="fuseSettings.layout.toolbar === 'below'">
+                    <fuse-toolbar class="below" [ngClass]="fuseSettings.colorClasses.toolbar"></fuse-toolbar>
+                </ng-container>
+
+                <fuse-content></fuse-content>
+
+            </div>
+
+            <fuse-sidebar [name]="'navbar'" [align]="'right'"
+                          [folded]="fuseSettings.layout.navigationFolded"
+                          [lockedOpen]="'gt-md'"
+                          class="right-navbar" [ngClass]="fuseSettings.colorClasses.navbar"
+                          *ngIf="fuseSettings.layout.navigation === 'right'">
+                <fuse-navbar layout="vertical"></fuse-navbar>
+            </fuse-sidebar>
+
+        </div>
+
+    </div>
+
+</mat-sidenav-container>
