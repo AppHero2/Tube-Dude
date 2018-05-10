@@ -29,7 +29,7 @@ export class VideoListService implements Resolve<any> {
      * @returns {Observable<any> | Promise<any> | any}
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        return this.getVideoList();
+      return this.getVideoList();
     }
 
     getVideoList(): Promise<any> {

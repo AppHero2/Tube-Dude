@@ -4,16 +4,18 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 export class VideoService implements Resolve<any>{
 
-  routeParams: any;
-    product: any;
-    onProductChanged: BehaviorSubject<any> = new BehaviorSubject({});
+    routeParams: any;
+    video: any;
+    onVideoChanged: BehaviorSubject<any> = new BehaviorSubject({});
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private afs: AngularFirestore
     )
     {
     }
@@ -32,7 +34,7 @@ export class VideoService implements Resolve<any>{
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getProduct()
+                this.getVideo()
             ]).then(
                 () => {
                     resolve();
@@ -42,43 +44,38 @@ export class VideoService implements Resolve<any>{
         });
     }
 
-    getProduct(): Promise<any>
+    getVideo(): Promise<any>
     {
         return new Promise((resolve, reject) => {
             if ( this.routeParams.id === 'new' )
             {
-                this.onProductChanged.next(false);
+                this.onVideoChanged.next(false);
                 resolve(false);
             }
             else
             {
-                this.http.get('api/e-commerce-products/' + this.routeParams.id)
-                    .subscribe((response: any) => {
-                        this.product = response;
-                        this.onProductChanged.next(this.product);
-                        resolve(response);
-                    }, reject);
+              this.afs.collection('VideoList').snapshotChanges().map(changes => {
+                return changes.map(c => ({id: c.payload.doc.id, ...c.payload.doc.data()}));
+              }).subscribe(data => {
+                this.video = data;
+                this.onVideoChanged.next(this.video);
+                resolve(data);
+              }, reject);
             }
         });
     }
 
-    saveProduct(product)
+    saveVideo(video)
     {
-        return new Promise((resolve, reject) => {
-            this.http.post('api/e-commerce-products/' + product.id, product)
-                .subscribe((response: any) => {
-                    resolve(response);
-                }, reject);
-        });
+        const id = video.id;
+        return this.afs.doc(`VideoList/${id}`).update(video);
     }
 
-    addProduct(product)
+    addVideo(video)
     {
-        return new Promise((resolve, reject) => {
-            this.http.post('api/e-commerce-products/', product)
-                .subscribe((response: any) => {
-                    resolve(response);
-                }, reject);
-        });
+        const id = this.afs.createId();
+        video.id = id;
+        return this.afs.doc(`VideoList/${id}`).set(video);
+
     }
 }

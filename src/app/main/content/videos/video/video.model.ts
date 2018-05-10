@@ -6,57 +6,30 @@ import { FuseUtils } from '@fuse/utils';
 export class Video
 {
     id: string;
-    name: string;
-    handle: string;
+    tube_id: string;
     description: string;
-    categories: string[];
-    tags: string[];
-    images: {
-        default: boolean,
-        id: string,
-        url: string,
-        type: string
-    }[];
-    priceTaxExcl: number;
-    priceTaxIncl: number;
-    taxRate: number;
-    comparedPrice: number;
-    quantity: number;
-    sku: string;
-    width: string;
-    height: string;
-    depth: string;
-    weight: string;
-    extraShippingFee: number;
+    url: string;
+    unique_code: string;
+
+    playback: number;
+    createdAt: number;
     active: boolean;
 
     constructor(product?)
     {
         product = product || {};
-        this.id = product.id || FuseUtils.generateGUID();
-        this.name = product.name || '';
-        this.handle = product.handle || FuseUtils.handleize(this.name);
+        this.id = product.id;
+        this.tube_id = product.tube_id;
+        this.unique_code = product.unique_code || FuseUtils.generateGUID();
         this.description = product.description || '';
-        this.categories = product.categories || [];
-        this.tags = product.tags || [];
-        this.images = product.images || [];
-        this.priceTaxExcl = product.priceTaxExcl || 0;
-        this.priceTaxIncl = product.priceTaxIncl || 0;
-        this.taxRate = product.taxRate || 0;
-        this.comparedPrice = product.comparedPrice || 0;
-        this.quantity = product.quantity || 0;
-        this.sku = product.sku || 0;
-        this.width = product.width || 0;
-        this.height = product.height || 0;
-        this.depth = product.depth || 0;
-        this.weight = product.weight || 0;
-        this.extraShippingFee = product.extraShippingFee || 0;
+        this.playback = product.quantity || 0;
+        this.createdAt = product.createdAt || Date.now();
         this.active = product.active || true;
     }
 
     addCategory(event: MatChipInputEvent): void
     {
-        const input = event.input;
+        /*const input = event.input;
         const value = event.value;
 
         // Add category
@@ -69,22 +42,22 @@ export class Video
         if ( input )
         {
             input.value = '';
-        }
+        }*/
     }
 
     removeCategory(category)
     {
-        const index = this.categories.indexOf(category);
+        /*const index = this.categories.indexOf(category);
 
         if ( index >= 0 )
         {
             this.categories.splice(index, 1);
-        }
+        }*/
     }
 
     addTag(event: MatChipInputEvent): void
     {
-        const input = event.input;
+        /*const input = event.input;
         const value = event.value;
 
         // Add tag
@@ -97,16 +70,16 @@ export class Video
         if ( input )
         {
             input.value = '';
-        }
+        }*/
     }
 
     removeTag(tag)
     {
-        const index = this.tags.indexOf(tag);
+        /*const index = this.tags.indexOf(tag);
 
         if ( index >= 0 )
         {
             this.tags.splice(index, 1);
-        }
+        }*/
     }
 }

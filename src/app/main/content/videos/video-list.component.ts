@@ -24,7 +24,7 @@ import { VideoListService } from './video-list.service';
 export class VideoListComponent implements OnInit {
 
     dataSource: FilesDataSource | null;
-    displayedColumns = ['id', 'thumb', 'description', 'createdAt', 'url', 'playback', 'active'];
+    displayedColumns = ['id', 'thumb', 'description', 'createdAt', 'playback', 'active'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('filter') filter: ElementRef;

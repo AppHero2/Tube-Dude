@@ -27,13 +27,13 @@ import { Location } from '@angular/common';
 
 export class VideoComponent implements OnInit, OnDestroy {
 
-  product = new Video();
+    video = new Video();
     onProductChanged: Subscription;
     pageType: string;
-    productForm: FormGroup;
+    videoForm: FormGroup;
 
     constructor(
-        private productService: VideoService,
+        private videoService: VideoService,
         private formBuilder: FormBuilder,
         public snackBar: MatSnackBar,
         private location: Location
@@ -45,21 +45,21 @@ export class VideoComponent implements OnInit, OnDestroy {
     {
         // Subscribe to update product on changes
         this.onProductChanged =
-            this.productService.onProductChanged
-                .subscribe(product => {
+            this.videoService.onVideoChanged
+                .subscribe(video => {
 
-                    if ( product )
+                    if ( video )
                     {
-                        this.product = new Video(product);
+                        this.video = new Video(video);
                         this.pageType = 'edit';
                     }
                     else
                     {
                         this.pageType = 'new';
-                        this.product = new Video();
+                        this.video = new Video();
                     }
 
-                    this.productForm = this.createProductForm();
+                    this.videoForm = this.createVideoForm();
                 });
     }
 
@@ -68,67 +68,56 @@ export class VideoComponent implements OnInit, OnDestroy {
         this.onProductChanged.unsubscribe();
     }
 
-    createProductForm()
+    createVideoForm()
     {
         return this.formBuilder.group({
-            id              : [this.product.id],
-            name            : [this.product.name],
-            handle          : [this.product.handle],
-            description     : [this.product.description],
-            categories      : [this.product.categories],
-            tags            : [this.product.tags],
-            images          : [this.product.images],
-            priceTaxExcl    : [this.product.priceTaxExcl],
-            priceTaxIncl    : [this.product.priceTaxIncl],
-            taxRate         : [this.product.taxRate],
-            comparedPrice   : [this.product.comparedPrice],
-            quantity        : [this.product.quantity],
-            sku             : [this.product.sku],
-            width           : [this.product.width],
-            height          : [this.product.height],
-            depth           : [this.product.depth],
-            weight          : [this.product.weight],
-            extraShippingFee: [this.product.extraShippingFee],
-            active          : [this.product.active]
+            id              : [this.video.id],
+            tube_id         : [this.video.tube_id],
+            unique_code     : [this.video.unique_code],
+            description     : [this.video.description],
+            playback        : [this.video.playback],
+            createdAt       : [this.video.createdAt],
+            active          : [this.video.active]
         });
     }
 
-    saveProduct()
+    saveVideo()
     {
-        const data = this.productForm.getRawValue();
-        data.handle = FuseUtils.handleize(data.name);
-        this.productService.saveProduct(data)
+        const data = this.videoForm.getRawValue();
+        data.handle = FuseUtils.handleize(data.tube_id);
+        this.videoService.saveVideo(data)
             .then(() => {
 
                 // Trigger the subscription with new data
-                this.productService.onProductChanged.next(data);
+                this.videoService.onVideoChanged.next(data);
 
                 // Show the success message
-                this.snackBar.open('Product saved', 'OK', {
+                this.snackBar.open('Video saved', 'OK', {
                     verticalPosition: 'top',
                     duration        : 2000
                 });
             });
     }
 
-    addProduct()
+    addVideo()
     {
-        const data = this.productForm.getRawValue();
-        data.handle = FuseUtils.handleize(data.name);
-        this.productService.addProduct(data)
+        const data = this.videoForm.getRawValue();
+        data.handle = FuseUtils.handleize(data.tube_id);
+        
+        this.videoService.addVideo(data)
             .then(() => {
 
                 // Trigger the subscription with new data
-                this.productService.onProductChanged.next(data);
+                this.videoService.onVideoChanged.next(data);
 
                 // Show the success message
-                this.snackBar.open('Product added', 'OK', {
+                this.snackBar.open('Video added', 'OK', {
                     verticalPosition: 'top',
                     duration        : 2000
                 });
 
                 // Change the location with new one
-                this.location.go('apps/e-commerce/products/' + this.product.id + '/' + this.product.handle);
+                // this.location.go('/products/' + this.product.id + '/' + this.product.handle);
             });
     }
 }

@@ -1,4 +1,4 @@
-<div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
+<div id="videos" class="page-layout carded fullwidth" fusePerfectScrollbar>
 
     <!-- TOP BACKGROUND -->
     <div class="top-bg mat-accent-bg"></div>
@@ -63,9 +63,9 @@
                     <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
                     <mat-cell *cdkCellDef="let video">
                         <img class="video-image"
-                             *ngIf="video.thumb" [alt]="thumb"
-                             [src]="assets/images/videos/image-placeholder.png"/>
-                        <img *ngIf="!video.thumb" [src]="'assets/images/videos/image-placeholder.png'">
+                             *ngIf="video.tube_id" [alt]="thumb"
+                             [src]="'https://img.youtube.com/vi/'+ video.tube_id +'/default.jpg'"/>
+                        <img *ngIf="!video.tube_id" [src]="'assets/images/videos/image-placeholder.png'">
                     </mat-cell>
                 </ng-container>
 
@@ -85,24 +85,16 @@
                     </mat-cell>
                 </ng-container>
 
-                <!-- Price Column -->
-                <ng-container cdkColumnDef="url">
-                    <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>Link</mat-header-cell>
-                    <mat-cell *cdkCellDef="let video" fxHide fxShow.gt-xs>
-                      <p class="text-truncate">{{video.url}}</p>
-                    </mat-cell>
-                </ng-container>
-
                 <!-- Quantity Column -->
                 <ng-container cdkColumnDef="playback">
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Playback</mat-header-cell>
                     <mat-cell *cdkCellDef="let video" fxHide fxShow.gt-sm>
 
-                        <span class="quantity-indicator text-truncate"
+                        <span *ngIf="video.playback" class="quantity-indicator text-truncate"
                               [ngClass]="{'mat-red-500-bg':video.playback <= 5, 'mat-amber-500-bg':video.playback > 5 && video.playback <= 25,'mat-green-600-bg':video.playback > 25}">
                         </span>
                         <span>
-                            {{video.playback}}
+                            {{video.playback || 0}}
                         </span>
 
                     </mat-cell>
@@ -110,8 +102,8 @@
 
                 <!-- Active Column -->
                 <ng-container cdkColumnDef="active">
-                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Active</mat-header-cell>
-                    <mat-cell *cdkCellDef="let video" fxHide fxShow.gt-xs>
+                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Active</mat-header-cell>
+                    <mat-cell *cdkCellDef="let video" fxHide fxShow.gt-sm>
                         <mat-icon *ngIf="video.active" class="active-icon mat-green-600-bg s-16">check</mat-icon>
                         <mat-icon *ngIf="!video.active" class="active-icon mat-red-500-bg s-16">close</mat-icon>
                     </mat-cell>
@@ -122,7 +114,7 @@
                 <mat-row *cdkRowDef="let video; columns: displayedColumns;"
                          class="video"
                          matRipple
-                         [routerLink]="'/apps/e-commerce/products/'+video.id+'/'+video.handle">
+                         [routerLink]="'/products/'+video.id+'/'+video.tube_id">
                 </mat-row>
 
             </mat-table>

@@ -101,7 +101,7 @@
                 </ng-container>
 
                 <ng-container cdkColumnDef="appliedLoan">
-                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxShow.gt-md>Loaned</mat-header-cell>
+                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxShow.gt-md>Allowed</mat-header-cell>
                     <mat-cell *cdkCellDef="let user" fxHide fxShow.gt-sm>
                     
                         <button mat-icon-button (click)="$event.stopPropagation();toggleStar(user.userId)" aria-label="Toggle star">

@@ -11,7 +11,7 @@ import * as $ from 'jquery';
 
 const MSG_APPROVE = "Congratulations, your application has been approved.  We will be contacting you shortly."
 const MSG_REJECT = "We regret to inform you that we cannot proceed with your application right now."
-const endPoint = "https://lenderfriend-node.herokuapp.com/notification/send"
+const endPoint = "https://lenderfriend-node.herokuapp.com/notification/fcm"
 
 export enum LoanStatus {
     APPLYING = 0, APPLIED, APPROVED, REJECTED, LOANED
