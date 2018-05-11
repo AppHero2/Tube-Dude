@@ -12,7 +12,9 @@ export class MessagingService {
   messaging = firebase.messaging()
   currentMessage = new BehaviorSubject(null)
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { }
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { 
+    this.trackVideoStatus();
+  }
 
   updateToken(token) {
     this.afAuth.authState.take(1).subscribe(user => {
@@ -43,5 +45,20 @@ export class MessagingService {
         this.currentMessage.next(payload)
       });
 
+    }
+
+    trackVideoStatus() {
+      var messagesRef = firebase.database().ref('messages');
+      messagesRef.on('child_added', function(data) {
+        console.log (data.key, data.val());
+        if (!data.val().seen){
+          const visitor = data.val().sender;
+          const videoId = data.val().video_id;
+          const videoURL = "https://www.youtube.com/watch?v=" + data.val().tube_id;
+          const watchedAt = data.val().createdAt;
+          alert(visitor + " watched " + videoURL + " at " + new Date(watchedAt));
+          messagesRef.child(data.key).child('seen').set(true);
+        }
+      });
     }
 }

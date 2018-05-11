@@ -22,8 +22,9 @@ import { environment } from 'environments/environment';
 import { DBService } from 'app/services/db.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { MessagingService } from 'app/services/messaging.service';
+import { MessagingService } from 'app/messaging.service';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { OneVideoComponent } from './main/content/one-video/one-video.component';
 
 const appRoutes: Routes = [
     {
@@ -37,9 +38,9 @@ const appRoutes: Routes = [
         loadChildren: './main/content/videos/video-list.module#VideoListModule'
     },
     {
-        path        : 'users',
+        path        : 'one-video',
         canLoad: [AuthGuardService],
-        loadChildren: './main/content/users/users.module#UsersModule'
+        component: OneVideoComponent
     },
     {
         path      : '**',

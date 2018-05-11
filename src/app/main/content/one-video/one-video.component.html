@@ -1,0 +1,94 @@
+<div id="dashboard-analytics" class="page-layout blank grey-100-bg" fusePerfectScrollbar>
+
+    <div class="main-widget">
+
+        <div class="position-relative p-24 mat-blue-600-bg"
+             fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <span class="h2">Visitors</span>
+                <span class="h5 secondary-text">Unique visitors by month</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                     (click)="widget1SelectedYear = '2016'"
+                     [ngClass]="{'blue-300-bg': widget1SelectedYear === '2016'}">
+                    2016
+                </div>
+                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                     (click)="widget1SelectedYear = '2017'"
+                     [ngClass]="{'blue-300-bg': widget1SelectedYear === '2017'}">
+                    2017
+                </div>
+                <div class="py-8 px-12 border-radius-2 line-height-1 cursor-pointer"
+                     (click)="widget1SelectedYear = '2018'"
+                     [ngClass]="{'blue-300-bg': widget1SelectedYear === '2018'}">
+                    2018
+                </div>
+            </div>
+        </div>
+
+        <div class="position-relative h-256 pb-16 mat-blue-600-bg">
+            <canvas baseChart
+                    [datasets]="widgets.widget1.datasets[widget1SelectedYear]"
+                    [labels]="widgets.widget1.labels"
+                    [colors]="widgets.widget1.colors"
+                    [options]="widgets.widget1.options"
+                    [chartType]="widgets.widget1.chartType">
+            </canvas>
+        </div>
+
+    </div>
+
+    <!-- Forms -->
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
+
+        <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"  name="form" [formGroup]="form">
+
+          <div class="h2 mb-24">Update Video Info</div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+              <mat-form-field fxFlex="100">
+                  <input matInput placeholder="Youtube ID" [(ngModel)]="curTubeID" formControlName="tube_id" required>
+                  <mat-error *ngIf="formErrors.tube_id.required">
+                      Youtube ID is required!
+                  </mat-error>
+              </mat-form-field>
+
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+              <mat-form-field fxFlex="100">
+                  <input matInput placeholder="Video Title" [(ngModel)]="curTitle" formControlName="description" required>
+              </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+              <mat-form-field fxFlex="50">
+                  <input matInput #postalCode placeholder="Unique Code" [(ngModel)]="curUNIQUE"
+                         formControlName="unique_code" required>
+                  <mat-error *ngIf="formErrors.unique_code.required">
+                      Unique Code is required!
+                  </mat-error>
+              </mat-form-field>
+
+              <button _ngcontent-c157="" mat-icon-button="" class="mat-icon-button" (click)="onUpdateCode()">
+                <span class="mat-button-wrapper">
+                  <mat-icon aria-label="Example icon-button with a heart icon" class="mat-icon material-icons" role="img" aria-hidden="true">autorenew</mat-icon>
+                </span>
+                <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+                <div class="mat-button-focus-overlay"></div>
+              </button>
+              
+          </div>
+
+          <button mat-raised-button type="button" color="accent" (click)="onUpdateVideo()">
+                 Update Video
+          </button>
+
+        </form>
+    
+    </div>
+
+</div>

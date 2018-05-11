@@ -8,15 +8,15 @@ export const navigation = [
                 'id'   : 'videos',
                 'title': 'Videos',
                 'type' : 'item',
-                'icon' : 'message',
+                'icon' : 'video_library',
                 'url'  : '/videos'
             },
             {
-                'id'   : 'users',
-                'title': 'Users',
+                'id'   : 'oneVideo',
+                'title': 'ONE video',
                 'type' : 'item',
-                'icon' : 'people',
-                'url'  : '/users'
+                'icon' : 'ondemand_video',
+                'url'  : '/one-video'
             }
         ]
     }

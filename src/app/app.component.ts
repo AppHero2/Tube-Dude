@@ -7,7 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SwPush } from '@angular/service-worker';
 import { SwUpdate } from '@angular/service-worker';
 import { OnInit } from '@angular/core';
-import { MessagingService } from 'app/services/messaging.service';
+import { MessagingService } from 'app/messaging.service';
 
 @Component({
     selector   : 'fuse-root',
